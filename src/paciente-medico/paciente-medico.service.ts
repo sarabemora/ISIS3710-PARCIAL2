@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MedicoEntity } from 'src/medico/medico.entity';
-import { PacienteEntity } from 'src/paciente/paciente.entity';
+import { MedicoEntity } from '../medico/medico.entity';
+import { PacienteEntity } from '../paciente/paciente.entity';
 import { Repository } from 'typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 
