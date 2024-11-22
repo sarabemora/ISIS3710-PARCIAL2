@@ -5,10 +5,13 @@ import { Repository } from 'typeorm';
 import { MedicoEntity } from './medico.entity';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import { faker } from '@faker-js/faker';
+import { PacienteEntity } from '../paciente/paciente.entity';
 
 describe('MedicoService', () => {
   let service: MedicoService;
   let repository: Repository<MedicoEntity>;
+  let pacienteRepository: Repository<PacienteEntity>;
+  let medicoList: MedicoEntity[];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -18,7 +21,24 @@ describe('MedicoService', () => {
 
     service = module.get<MedicoService>(MedicoService);
     repository = module.get<Repository<MedicoEntity>>(getRepositoryToken(MedicoEntity));
+    pacienteRepository = module.get<Repository<PacienteEntity>>(getRepositoryToken(PacienteEntity));
+    await seedDatabase();
   });
+
+  const seedDatabase = async () => {
+    await repository.clear();
+    await pacienteRepository.clear();
+    medicoList = [];
+    for (let i = 0; i < 5; i++) {
+      const medico: MedicoEntity = await repository.save({
+        nombre: faker.person.fullName(),
+        especialidad: faker.lorem.word(),
+        telefono: faker.phone.number(),
+        pacientes: []
+      });
+      medicoList.push(medico);
+    }
+  };
 
   it('should be defined', () => {
     expect(service).toBeDefined();
@@ -65,5 +85,49 @@ describe('MedicoService', () => {
     };
 
     await expect(() => service.create(medico)).rejects.toHaveProperty("message", "La especialidad no puede estar vacía");
+  });
+
+  it('findOne should return a medico by id', async () => {
+    const storedMedico: MedicoEntity = medicoList[0];
+    const medico: MedicoEntity = await service.findOne(storedMedico.id);
+    expect(medico).not.toBeNull();
+    expect(medico.nombre).toEqual(storedMedico.nombre);
+    expect(medico.especialidad).toEqual(storedMedico.especialidad);
+    expect(medico.telefono).toEqual(storedMedico.telefono);
+  });
+
+  it('findOne should throw an exception when the medico does not exist', async () => {
+    await expect(() => service.findOne("0")).rejects.toHaveProperty("message", "Médico no encontrado");
+  })
+
+  it('findAll should return all medicos', async () => {
+    const medicos: MedicoEntity[] = await service.findAll();
+    expect(medicos).not.toBeNull();
+    expect(medicos).toHaveLength(medicoList.length);
+  });
+
+  it('delete should remove a medico by id', async () => {
+    const medico: MedicoEntity = medicoList[0];
+    await service.delete(medico.id);
+    const deletedMedico: MedicoEntity = await repository.findOne({ where: { id: medico.id } });
+    expect(deletedMedico).toBeNull();
+  });
+
+  it('delete should throw an exception when trying to remove a medico with a patient associated', async () => {
+    const medico: MedicoEntity = medicoList[0];
+    const paciente: PacienteEntity = await pacienteRepository.save({
+      nombre: faker.person.fullName(),
+      genero: 'Masculino',
+      medicos: [medico],
+      diagnosticos: []
+    });
+    medico.pacientes = [paciente];
+    await repository.save(medico);
+
+    await expect(service.delete(medico.id)).rejects.toHaveProperty("message", "No se puede eliminar un médico con pacientes asociados");
+  });
+
+  it('delete should throw an exception when the medico does not exist', async () => {
+    await expect(() => service.delete("0")).rejects.toHaveProperty("message", "Médico no encontrado");
   });
 });

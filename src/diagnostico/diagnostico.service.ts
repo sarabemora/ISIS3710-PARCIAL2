@@ -32,7 +32,7 @@ export class DiagnosticoService {
     }
 
     async delete(id: string) {
-        const diagnostico: DiagnosticoEntity = await this.diagnosticoRepository.findOne({where: {id}});
+        const diagnostico: DiagnosticoEntity = await this.diagnosticoRepository.findOne({where: {id}, relations: ['paciente']});
         if (!diagnostico) {
             throw new BusinessLogicException('Diagnostico no encontrado', BusinessError.NOT_FOUND);
         }

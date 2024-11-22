@@ -39,7 +39,7 @@ export class MedicoService {
         if (!medico) {
             throw new BusinessLogicException('Médico no encontrado', BusinessError.NOT_FOUND);
         }
-        if (medico.pacientes && medico.pacientes.length > 0) {
+        if (medico.pacientes.length > 0 && medico.pacientes) {
             throw new BusinessLogicException('No se puede eliminar un médico con pacientes asociados', BusinessError.BAD_REQUEST);
         }
         await this.medicoRepository.remove(medico);

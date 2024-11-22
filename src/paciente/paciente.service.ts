@@ -13,9 +13,6 @@ export class PacienteService {
     ) {}
 
     async create(paciente: PacienteEntity): Promise<PacienteEntity> {
-        if (!paciente.nombre || paciente.nombre.trim().length === 0) {
-            throw new BusinessLogicException('El nombre no puede estar vacío', BusinessError.BAD_REQUEST);
-        }
         if (paciente.nombre.trim().length < 3) {
             throw new BusinessLogicException('El nombre no puede tener menos de 3 caracteres', BusinessError.BAD_REQUEST);
         }
@@ -35,7 +32,7 @@ export class PacienteService {
     }
 
     async delete(id: string) {
-        const paciente: PacienteEntity = await this.pacienteReporsitory.findOne({where: {id}, relations: ['pacientes']});
+        const paciente: PacienteEntity = await this.pacienteReporsitory.findOne({where: {id}, relations: ['medicos', 'diagnosticos']});
         if (!paciente) {
             throw new BusinessLogicException('Paciente no encontrado', BusinessError.NOT_FOUND);
         }
