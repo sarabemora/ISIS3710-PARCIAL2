@@ -38,5 +38,4 @@ export class DiagnosticoService {
         }
         await this.diagnosticoRepository.remove(diagnostico);
     }
-
 }
