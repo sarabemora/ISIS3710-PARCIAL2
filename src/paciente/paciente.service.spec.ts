@@ -3,8 +3,8 @@ import { PacienteService } from './paciente.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { PacienteEntity } from './paciente.entity';
 import { Repository } from 'typeorm';
-import { BusinessLogicException } from '../shared/errors/business-errors';
 import { faker } from '@faker-js/faker';
+import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 
 describe('PacienteService', () => {
   let service: PacienteService;
@@ -12,13 +12,8 @@ describe('PacienteService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        PacienteService,
-        {
-          provide: getRepositoryToken(PacienteEntity),
-          useClass: Repository,
-        },
-      ],
+      imports: [...TypeOrmTestingConfig()],
+      providers: [PacienteService],
     }).compile();
 
     service = module.get<PacienteService>(PacienteService);
@@ -29,17 +24,14 @@ describe('PacienteService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should create a paciente correctly', async () => {
+  it('create should return a new paciente', async () => {
     const paciente: PacienteEntity = {
       id: '',
-      nombre: faker.name.firstName(),
+      nombre: faker.person.fullName(), 
       genero: 'Masculino',
       medicos: [],
       diagnosticos: []
     };
-
-    jest.spyOn(repository, 'save').mockResolvedValue(paciente);
-    jest.spyOn(repository, 'findOne').mockResolvedValue(paciente);
 
     const newPaciente: PacienteEntity = await service.create(paciente);
     expect(newPaciente).not.toBeNull();
@@ -50,7 +42,7 @@ describe('PacienteService', () => {
     expect(storedPaciente.genero).toEqual(newPaciente.genero);
   });
 
-  it('should throw an exception when creating a paciente with a name less than 3 characters', async () => {
+  it('create should throw an exception when creating a paciente with a name less than 3 characters', async () => {
     const paciente: PacienteEntity = {
       id: '2',
       nombre: 'Jo',
@@ -59,6 +51,6 @@ describe('PacienteService', () => {
       diagnosticos: []
     };
 
-    await expect(service.create(paciente)).rejects.toHaveProperty("message", "El nombre no puede tener menos de 3 caracteres");
+    await expect(() => service.create(paciente)).rejects.toHaveProperty("message", "El nombre no puede tener menos de 3 caracteres");
   });
 });
