@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "2a2f2d03-1e83-4376-ad69-904e6c9c53b1",
+		"name": "Pacientes-Medicos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29170324"
+	},
+	"item": [
+		{
+			"name": "Add a paciente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"paciente_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Dani Benavides Mora\",\r\n    \"genero\": \"Masculino\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/pacientes",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pacientes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add a paciente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\r\n    \"nombre\": \"Dani Benavides Mora\",\r\n    \"genero\": \"Masculino\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/pacientes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Add a medico",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"medico_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Juliana Jurado\",\r\n    \"especialidad\": \"Ginecologia\",\r\n    \"telefono\": \"3023704454\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/medicos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"medicos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add a medico",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Juliana Jurado\",\r\n    \"especialidad\": \"Ginecologia\",\r\n    \"telefono\": \"3023704454\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/medicos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"medicos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\r\n    \"nombre\": \"Juliana Jurado\",\r\n    \"especialidad\": \"Ginecologia\",\r\n    \"telefono\": \"3023704454\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Add a medico to a paciente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/pacientes/{{paciente_id}}/medicos/{{medico_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pacientes",
+						"{{paciente_id}}",
+						"medicos",
+						"{{medico_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add a medico to a paciente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pacientes/{{paciente_id}}/medicos/{{medico_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes",
+								"{{paciente_id}}",
+								"medicos",
+								"{{medico_id}}"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"nombre\": \"Dani Benavides Mora\",\n    \"genero\": \"Masculino\",\n    \"medicos\": [\n        {\n            \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n            \"nombre\": \"Juliana Jurado\",\n            \"especialidad\": \"Ginecologia\",\n            \"telefono\": \"3023704454\"\n        }\n    ],\n    \"diagnosticos\": []\n}"
+				}
+			]
+		}
+	]
+}

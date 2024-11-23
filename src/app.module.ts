@@ -24,6 +24,9 @@ import { PacienteMedicoModule } from './paciente-medico/paciente-medico.module';
       synchronize: true,
       keepConnectionAlive: true
     }),
+    PacienteModule,
+    MedicoModule,
+    DiagnosticoModule,
     PacienteMedicoModule
   ],
   controllers: [AppController],

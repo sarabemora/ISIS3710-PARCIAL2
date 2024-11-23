@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "2995a602-cbec-4e71-9b04-a4f834d60c52",
+		"name": "Diagnosticos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29170324"
+	},
+	"item": [
+		{
+			"name": "Add a diagnostico",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"diagnostico_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Infeccion\",\r\n    \"descripcion\": \"Bacteria\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/diagnosticos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"diagnosticos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add a diagnostico",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Infeccion\",\r\n    \"descripcion\": \"Bacteria\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/diagnosticos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"diagnosticos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120004\",\r\n    \"nombre\": \"Infeccion\",\r\n    \"descripcion\": \"Bacteria\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all diagnosticos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/diagnosticos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"diagnosticos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get all diagnosticos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/diagnosticos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"diagnosticos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120004\",\r\n    \"nombre\": \"Infeccion\",\r\n    \"descripcion\": \"Bacteria\",\r\n    \"paciente\": {}\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Get one diagnostico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/diagnosticos/{{diagnostico_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"diagnosticos",
+						"{{diagnostico_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get one diagnostico",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/diagnosticos/{{diagnostico_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"diagnosticos",
+								"{{diagnostico_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120004\",\n    \"nombre\": \"Infeccion\",\n    \"descripcion\": \"Bacteria\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get an invalid diagnostico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/diagnosticos/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"diagnosticos",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get an invalid diagnostico",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/diagnosticos/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"diagnosticos",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"Diagnostico no encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete a diagnostico",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/diagnosticos/{{diagnostico_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"diagnosticos",
+						"{{diagnostico_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete a diagnostico",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/diagnosticos/{{diagnostico_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"diagnosticos",
+								"{{diagnostico_id}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete an invalid diagnostico",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/diagnosticos/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"diagnosticos",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete an invalid diagnostico",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/diagnosticos/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"diagnosticos",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"Diagnostico no encontrado\"\n}"
+				}
+			]
+		}
+	]
+}

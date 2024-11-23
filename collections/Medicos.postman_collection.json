@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "f56e9b36-0629-4b66-8a78-f56d942a1cc5",
+		"name": "Medicos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29170324"
+	},
+	"item": [
+		{
+			"name": "Add a medico",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"medico_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Juliana Jurado\",\r\n    \"especialidad\": \"Ginecologia\",\r\n    \"telefono\": \"3023704454\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/medicos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"medicos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add a medico",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Juliana Jurado\",\r\n    \"especialidad\": \"Ginecologia\",\r\n    \"telefono\": \"3023704454\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/medicos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"medicos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\r\n    \"nombre\": \"Juliana Jurado\",\r\n    \"especialidad\": \"Ginecologia\",\r\n    \"telefono\": \"3023704454\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all medicos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/medicos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"medicos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get all medicos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/medicos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"medicos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"nombre\": \"Juliana Jurado\",\n        \"especialidad\": \"Ginecologia\",\n        \"telefono\": \"3023704454\",\n        \"id\": \"719d8f64-ddfc-42a5-bb8d-b44d57f3c55f\",\n        \"pacientes\": [\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"nombre\": \"Dani Benavides Mora\",\n                \"genero\": \"Masculino\"\n            }\n        ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get one medico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/medicos/{{medico_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"medicos",
+						"{{medico_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get one medico",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/medicos/{{medico_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"medicos",
+								"{{medico_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n    \"nombre\": \"Juliana Jurado\",\n    \"especialidad\": \"Ginecologia\",\n    \"telefono\": \"3023704454\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get an invalid medico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/medicos/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"medicos",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get an invalid medico",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/medicos/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"medicos",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"Médico no encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete a medico",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/medicos/{{medico_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"medicos",
+						"{{medico_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete a medico",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/medicos/{{medico_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"medicos",
+								"{{medico_id}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete an invalid medico",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/medicos/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"medicos",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete an invalid medico",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/medicos/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"medicos",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"Médico no encontrado\"\r\n}"
+				}
+			]
+		}
+	]
+}
