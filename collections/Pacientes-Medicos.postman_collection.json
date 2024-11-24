@@ -178,6 +178,20 @@
 		},
 		{
 			"name": "Add a medico to a paciente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -227,6 +241,152 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"nombre\": \"Dani Benavides Mora\",\n    \"genero\": \"Masculino\",\n    \"medicos\": [\n        {\n            \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n            \"nombre\": \"Juliana Jurado\",\n            \"especialidad\": \"Ginecologia\",\n            \"telefono\": \"3023704454\"\n        }\n    ],\n    \"diagnosticos\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Add an invalid medico to a paciente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Médico no encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/pacientes/{{paciente_id}}/medicos/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pacientes",
+						"{{paciente_id}}",
+						"medicos",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add an invalid medico to a paciente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pacientes/{{paciente_id}}/medicos/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes",
+								"{{paciente_id}}",
+								"medicos",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"Médico no encontrado\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add a medico to an invalid paciente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Paciente no encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/pacientes/00000000-0000-0000-0000-000000000000/medicos/{{medico_id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pacientes",
+						"00000000-0000-0000-0000-000000000000",
+						"medicos",
+						"{{medico_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add a medico to an invalid paciente",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pacientes/00000000-0000-0000-0000-000000000000/medicos/{{medico_id}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes",
+								"00000000-0000-0000-0000-000000000000",
+								"medicos",
+								"{{medico_id}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"Paciente no encontrado\"\n}"
 				}
 			]
 		}

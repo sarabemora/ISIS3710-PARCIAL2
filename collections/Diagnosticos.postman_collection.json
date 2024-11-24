@@ -100,7 +100,117 @@
 			]
 		},
 		{
+			"name": "Add an invalid diagnostico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"   pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La descripción no puede tener más de 200 caracteres\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Infeccion\",\r\n    \"descripcion\": \"Bacteria alskdjf asñdlfjaks dñalskdjf alsdkjf asldkjf añsldkfjasdñlkfj dalfkjdñlfakjsdfalkdjf aldkjf aldkjf aldjf alsdjflaksdjf dflkja dlfkja dlfkja dlfj aldkjf adlkjf alkdjf aldkjf aldjkf ñalkdjf ñaldkjf alkdsjf lakjdf ldjf ldkjf aljd flakjds flajd faljd fladj flakjsdfñlkajdlkfj aldjf aldjf alkdjf alkjds flakjdf ladjf ladjf aldkjf aldjf aldjf añlkdjfañlkdsjfñlakdjfñlkja\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/diagnosticos",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"diagnosticos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add an invalid diagnostico",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Infeccion\",\r\n    \"descripcion\": \"Bacteria alskdjf asñdlfjaks dñalskdjf alsdkjf asldkjf añsldkfjasdñlkfj dalfkjdñlfakjsdfalkdjf aldkjf aldkjf aldjf alsdjflaksdjf dflkja dlfkja dlfkja dlfj aldkjf adlkjf alkdjf aldkjf aldjkf ñalkdjf ñaldkjf alkdsjf lakjdf ldjf ldkjf aljd flakjds flajd faljd fladj flakjsdfñlkajdlkfj aldjf aldjf alkdjf alkjds flakjdf ladjf ladjf aldkjf aldjf aldjf añlkdjfañlkdsjfñlakdjfñlkja\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/diagnosticos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"diagnosticos"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"name": "Content-Type",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n   \"statusCode\": 400,\r\n   \"message\": \"La descripción no puede tener más de 200 caracteres\"\r\n}"
+				}
+			]
+		},
+		{
 			"name": "Get all diagnosticos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of diagnosticos > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -149,6 +259,20 @@
 		},
 		{
 			"name": "Get one diagnostico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -199,6 +323,25 @@
 		},
 		{
 			"name": "Get an invalid diagnostico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Diagnostico no encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -241,6 +384,20 @@
 		},
 		{
 			"name": "Delete a diagnostico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -283,6 +440,25 @@
 		},
 		{
 			"name": "Delete an invalid diagnostico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Diagnostico no encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],

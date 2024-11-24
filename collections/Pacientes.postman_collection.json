@@ -92,7 +92,116 @@
 			]
 		},
 		{
+			"name": "Add a paciente with an invalid name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"   pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El nombre no puede tener menos de 3 caracteres\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Da\",\r\n    \"genero\": \"Masculino\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/pacientes",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"pacientes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add a paciente with an invalid name",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Da\",\r\n    \"genero\": \"Masculino\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/pacientes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pacientes"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n   \"statusCode\": 400,\r\n   \"message\": \"El nombre no puede tener menos de 3 caracteres\"\r\n}"
+				}
+			]
+		},
+		{
 			"name": "Get all pacientes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of pacientes > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -128,15 +237,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/pacientes",
-							"protocol": "http",
+							"raw": "{{baseURL}}/pacientes",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
-								"v1",
 								"pacientes"
 							]
 						}
@@ -152,6 +257,20 @@
 		},
 		{
 			"name": "Get one paciente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -188,15 +307,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/pacientes/{{paciente_id}}",
-							"protocol": "http",
+							"raw": "{{baseURL}}/pacientes/{{paciente_id}}",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "3000",
 							"path": [
-								"api",
-								"v1",
 								"pacientes",
 								"{{paciente_id}}"
 							]
@@ -213,6 +328,25 @@
 		},
 		{
 			"name": "Get an invalid paciente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Paciente no encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -278,6 +412,20 @@
 		},
 		{
 			"name": "Delete a paciente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -320,6 +468,25 @@
 		},
 		{
 			"name": "Delete an invalid paciente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"Paciente no encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
